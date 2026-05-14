@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex — SaaS Onboarding: Sign-up to First Workflow</title>
+<style>
+  @page { size: 17in 11in; margin: 0.3in; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 11px; color: #1a1a1a; background: white; padding: 0;
+  }
+  .map-wrapper {
+    max-width: 100%; margin: 0; background: white;
+    border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); overflow: hidden;
+  }
+
+  /* ZONE A */
+  .zone-a {
+    background: #1E3A5F; color: white;
+    padding: 14px 20px; display: flex; gap: 18px; align-items: flex-start; flex-wrap: nowrap;
+  }
+  .persona-card {
+    background: rgba(255,255,255,0.1); border-radius: 6px; padding: 10px 14px;
+    min-width: 190px; flex-shrink: 0;
+  }
+  .persona-avatar {
+    width: 32px; height: 32px; background: #3a7bd5; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 12px; margin-bottom: 6px;
+  }
+  .persona-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .persona-role { font-size: 10px; opacity: 0.75; margin-bottom: 7px; }
+  .persona-quote {
+    font-style: italic; font-size: 10px; opacity: 0.9;
+    border-left: 3px solid rgba(255,255,255,0.4); padding-left: 8px; line-height: 1.4;
+  }
+  .zone-a-center { flex: 1; min-width: 200px; }
+  .map-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .scenario-text { font-size: 10px; opacity: 0.85; line-height: 1.5; margin-bottom: 8px; }
+  .meta-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .meta-pill {
+    background: rgba(255,255,255,0.15); border-radius: 20px;
+    padding: 3px 9px; font-size: 9px; font-weight: 500;
+  }
+  .zone-a-right {
+    flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 5px;
+  }
+  .confidence-badge {
+    background: #FFC107; color: #1a1a1a; border-radius: 20px;
+    padding: 4px 11px; font-size: 9px; font-weight: 700; letter-spacing: 0.5px;
+  }
+  .confidence-label { font-size: 9px; opacity: 0.7; text-align: right; }
+  .scope-text { font-size: 9px; opacity: 0.75; text-align: right; line-height: 1.5; }
+
+  /* ZONE B */
+  .zone-b-wrapper { overflow: visible; }
+  .zone-b {
+    display: grid; grid-template-columns: 72px repeat(5, 1fr);
+    width: 100%; border-top: 1px solid #e0e0e0;
+  }
+  .row-label {
+    background: #f8f8f8; border-right: 2px solid #e0e0e0; border-bottom: 1px solid #e0e0e0;
+    padding: 6px 5px; font-size: 8px; font-weight: 700; color: #555;
+    text-transform: uppercase; letter-spacing: 0.4px;
+    display: flex; align-items: center; justify-content: flex-end;
+    text-align: right; line-height: 1.3;
+  }
+  .stage-header {
+    background: #1E3A5F; color: white; padding: 8px 10px;
+    border-right: 1px solid rgba(255,255,255,0.15); border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .stage-name { font-size: 10px; font-weight: 700; margin-bottom: 2px; }
+  .stage-desc { font-size: 8px; opacity: 0.7; line-height: 1.3; }
+  .cell {
+    padding: 6px 8px; border-right: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8;
+    vertical-align: top; line-height: 1.4;
+  }
+  .cell-actions { background: #F0F4FF; }
+  .cell-touchpoints { background: #E8F4FD; }
+  .cell-thoughts { background: #FFFDE7; font-style: italic; }
+  .cell ul { list-style: none; padding: 0; }
+  .cell ul li {
+    font-size: 9px; margin-bottom: 4px; padding-left: 8px;
+    position: relative; line-height: 1.35;
+  }
+  .cell ul li::before { content: "•"; position: absolute; left: 0; color: #888; }
+  .cell-thoughts ul li::before { content: '"'; color: #bdb76b; }
+
+  /* Pain points */
+  .cell-pain { background: #FFEBEE; }
+  .pain-card {
+    background: white; border-left: 3px solid #E53935; border-radius: 0 3px 3px 0;
+    padding: 4px 7px; margin-bottom: 4px;
+  }
+  .pain-card:last-child { margin-bottom: 0; }
+  .pain-text { font-size: 9px; line-height: 1.35; margin-bottom: 3px; color: #1a1a1a; }
+  .pain-meta { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+  .severity-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .severity-high { background: #E53935; }
+  .severity-medium { background: #FFC107; }
+  .severity-low { background: #9E9E9E; }
+  .source-tag {
+    font-size: 8px; font-weight: 700; padding: 1px 5px; border-radius: 10px;
+    text-transform: uppercase; letter-spacing: 0.3px;
+  }
+  .source-research { background: #E3F2FD; color: #1E88E5; }
+  .source-stated { background: #F3E5F5; color: #8E24AA; }
+  .source-assumed { background: #F5F5F5; color: #757575; font-style: italic; }
+
+  /* Opportunities */
+  .cell-opp { background: #E8F5E9; }
+  .opp-card {
+    background: white; border-left: 3px solid #43A047; border-radius: 0 3px 3px 0;
+    padding: 4px 7px; margin-bottom: 4px;
+  }
+  .opp-card:last-child { margin-bottom: 0; }
+  .opp-text { font-size: 9px; line-height: 1.35; margin-bottom: 3px; color: #1a1a1a; }
+
+  /* Emotional curve */
+  .row-label-curve {
+    background: #f8f8f8; border-right: 2px solid #e0e0e0; border-bottom: 1px solid #e0e0e0;
+    padding: 6px 5px; font-size: 8px; font-weight: 700; color: #555;
+    text-transform: uppercase; letter-spacing: 0.4px;
+    display: flex; align-items: center; justify-content: flex-end; text-align: right;
+  }
+  .curve-cell {
+    grid-column: 2 / 7; background: #fafafa;
+    border-bottom: 1px solid #e8e8e8; padding: 4px 0; position: relative;
+  }
+  .curve-cell svg { display: block; width: 100%; height: 100px; }
+
+  /* ZONE C */
+  .zone-c {
+    background: #F5F5F5; padding: 16px 20px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;
+    border-top: 2px solid #e0e0e0;
+  }
+  .insight-section h3 {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; color: #555; margin-bottom: 8px;
+  }
+  .insight-pain-card {
+    background: white; border-left: 3px solid #E53935; border-radius: 0 4px 4px 0;
+    padding: 8px 10px; margin-bottom: 6px; font-size: 10px; line-height: 1.5;
+  }
+  .insight-opp-card {
+    background: white; border-left: 3px solid #43A047; border-radius: 0 4px 4px 0;
+    padding: 8px 10px; margin-bottom: 6px; font-size: 10px; line-height: 1.5;
+  }
+  .insight-focus {
+    background: white; border-radius: 6px; padding: 12px;
+    font-size: 10px; line-height: 1.6; color: #2a2a2a; border-top: 3px solid #1E3A5F;
+  }
+  .map-footer {
+    background: #1E3A5F; color: rgba(255,255,255,0.5);
+    font-size: 9px; padding: 8px 20px; display: flex; justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+<div class="map-wrapper">
+
+  <!-- ZONE A -->
+  <div class="zone-a">
+    <div class="persona-card">
+      <div class="persona-avatar">AC</div>
+      <div class="persona-name">Alex</div>
+      <div class="persona-role">Marketing Manager · Mid-size SaaS Company</div>
+      <div class="persona-quote">"I signed up, clicked around for 20 minutes, and then just went back to my spreadsheet."</div>
+    </div>
+    <div class="zone-a-center">
+      <div class="map-title">SaaS Onboarding — Sign-up to First Real Workflow</div>
+      <div class="scenario-text">A mid-level marketing manager discovers, evaluates, and onboards to a new project management tool — from the first landing page visit through successfully running their first campaign workflow.</div>
+      <div class="meta-row">
+        <span class="meta-pill">Current State</span>
+        <span class="meta-pill">SaaS · Onboarding</span>
+        <span class="meta-pill">Mixed sources</span>
+      </div>
+    </div>
+    <div class="zone-a-right">
+      <div class="confidence-badge">MEDIUM CONFIDENCE</div>
+      <div class="confidence-label">Mix of research &amp; inference</div>
+      <div class="scope-text">Landing page discovery<br>→ First workflow complete</div>
+    </div>
+  </div>
+
+  <!-- ZONE B -->
+  <div class="zone-b-wrapper">
+    <div class="zone-b">
+
+      <!-- Stage Headers -->
+      <div class="row-label">Stages</div>
+      <div class="stage-header">
+        <div class="stage-name">Awareness</div>
+        <div class="stage-desc">Discovers the tool via search, social, or peer recommendation</div>
+      </div>
+      <div class="stage-header">
+        <div class="stage-name">Sign-up</div>
+        <div class="stage-desc">Creates an account and sees the product for the first time</div>
+      </div>
+      <div class="stage-header">
+        <div class="stage-name">Onboarding</div>
+        <div class="stage-desc">Works through setup flows, templates, and guided tours</div>
+      </div>
+      <div class="stage-header">
+        <div class="stage-name">First Value</div>
+        <div class="stage-desc">Completes a real task that replaces something they did before</div>
+      </div>
+      <div class="stage-header">
+        <div class="stage-name">Habit Formation</div>
+        <div class="stage-desc">Returns without prompting and brings in teammates</div>
+      </div>
+
+      <!-- Actions -->
+      <div class="row-label">Actions</div>
+      <div class="cell cell-actions"><ul>
+        <li>Sees a peer post on LinkedIn about the tool</li>
+        <li>Googles the category to compare options</li>
+        <li>Reads 2–3 reviews on G2 or Capterra</li>
+        <li>Visits the landing page and watches a demo video</li>
+      </ul></div>
+      <div class="cell cell-actions"><ul>
+        <li>Clicks "Start free trial" and enters email</li>
+        <li>Answers 3–5 onboarding questions about role and team size</li>
+        <li>Receives a welcome email with a checklist</li>
+        <li>Lands in the product dashboard for the first time</li>
+      </ul></div>
+      <div class="cell cell-actions"><ul>
+        <li>Clicks through an interactive product tour</li>
+        <li>Creates a first project from a template</li>
+        <li>Invites one teammate to see how collaboration works</li>
+        <li>Watches a 3-minute getting-started video</li>
+      </ul></div>
+      <div class="cell cell-actions"><ul>
+        <li>Migrates a real campaign plan from a spreadsheet</li>
+        <li>Assigns tasks to teammates inside the tool</li>
+        <li>Runs the first team check-in using the board view</li>
+        <li>Shares a project link with a stakeholder</li>
+      </ul></div>
+      <div class="cell cell-actions"><ul>
+        <li>Opens the app first thing on Monday morning without being prompted</li>
+        <li>Invites two more teammates from a different department</li>
+        <li>Upgrades to a paid plan when the trial prompts</li>
+        <li>Recommends the tool in a team Slack channel</li>
+      </ul></div>
+
+      <!-- Touchpoints -->
+      <div class="row-label">Touchpoints &amp; Channels</div>
+      <div class="cell cell-touchpoints"><ul>
+        <li>LinkedIn / Twitter feed</li>
+        <li>Google search results</li>
+        <li>Review sites (G2, Capterra)</li>
+        <li>Landing page + demo video</li>
+      </ul></div>
+      <div class="cell cell-touchpoints"><ul>
+        <li>Sign-up form</li>
+        <li>Welcome email</li>
+        <li>In-app dashboard (first view)</li>
+        <li>Onboarding checklist</li>
+      </ul></div>
+      <div class="cell cell-touchpoints"><ul>
+        <li>Interactive product tour (in-app)</li>
+        <li>Template library</li>
+        <li>Invite flow (email)</li>
+        <li>Getting-started video</li>
+      </ul></div>
+      <div class="cell cell-touchpoints"><ul>
+        <li>Board / list view (primary workspace)</li>
+        <li>Task assignment UI</li>
+        <li>Shareable project link</li>
+        <li>Email notifications</li>
+      </ul></div>
+      <div class="cell cell-touchpoints"><ul>
+        <li>Direct app open (bookmark / mobile)</li>
+        <li>Team invite flow</li>
+        <li>Upgrade / billing page</li>
+        <li>Slack integration</li>
+      </ul></div>
+
+      <!-- Thoughts -->
+      <div class="row-label">Thoughts</div>
+      <div class="cell cell-thoughts"><ul>
+        <li>Is this actually better than what I already use?</li>
+        <li>What does this cost once the trial is over?</li>
+        <li>My team won't switch unless I can prove it saves time</li>
+      </ul></div>
+      <div class="cell cell-thoughts"><ul>
+        <li>Why do they need to know my team size right now?</li>
+        <li>This looks clean — I hope it's not too complex under the hood</li>
+        <li>I'll give it 20 minutes before I decide</li>
+      </ul></div>
+      <div class="cell cell-thoughts"><ul>
+        <li>This tour is showing me features I don't need yet</li>
+        <li>I just want to see if it can handle my actual workflow</li>
+        <li>"I signed up, clicked around for 20 minutes, and went back to my spreadsheet"</li>
+      </ul></div>
+      <div class="cell cell-thoughts"><ul>
+        <li>Okay — this is actually faster than what I was doing</li>
+        <li>If my teammates don't use it, it doesn't help me</li>
+        <li>This is the moment where it clicks or doesn't</li>
+      </ul></div>
+      <div class="cell cell-thoughts"><ul>
+        <li>I don't want to manage two systems — this has to replace the spreadsheet entirely</li>
+        <li>Now I need to get my manager bought in before the trial ends</li>
+        <li>This is worth paying for</li>
+      </ul></div>
+
+      <!-- Emotional Curve -->
+      <div class="row-label-curve">Emotional<br>Curve</div>
+      <div class="curve-cell">
+        <!-- Scores: Awareness=+2, Sign-up=+3, Onboarding=-2, First Value=+3, Habit=+4 -->
+        <!-- y = 50 - (score/5)*42: +2=33, +3=25, -2=67, +3=25, +4=16 -->
+        <svg viewBox="0 0 1000 100" preserveAspectRatio="none" aria-label="Emotional curve">
+          <line x1="0" y1="50" x2="1000" y2="50" stroke="#ccc" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <text x="8" y="47" font-size="8" fill="#aaa">+</text>
+          <text x="8" y="58" font-size="8" fill="#aaa">−</text>
+          <!-- Path through points: 100,33 → 300,25 → 500,67 → 700,25 → 900,16 -->
+          <path d="M 100,33 C 167,30 233,22 300,25 C 367,28 433,60 500,67 C 567,74 633,28 700,25 C 767,22 833,18 900,16"
+                fill="none" stroke="#90A4AE" stroke-width="2" stroke-linecap="round"/>
+          <!-- Awareness +2 green -->
+          <circle cx="100" cy="33" r="7" fill="#43A047" stroke="white" stroke-width="2"/>
+          <text x="100" y="22" text-anchor="middle" font-size="13">😐</text>
+          <text x="100" y="95" text-anchor="middle" font-size="8" fill="#555">+2</text>
+          <!-- Sign-up +3 green -->
+          <circle cx="300" cy="25" r="7" fill="#43A047" stroke="white" stroke-width="2"/>
+          <text x="300" y="14" text-anchor="middle" font-size="13">😊</text>
+          <text x="300" y="95" text-anchor="middle" font-size="8" fill="#555">+3</text>
+          <!-- Onboarding -2 red -->
+          <circle cx="500" cy="67" r="7" fill="#E53935" stroke="white" stroke-width="2"/>
+          <text x="500" y="84" text-anchor="middle" font-size="13">😠</text>
+          <text x="500" y="97" text-anchor="middle" font-size="8" fill="#555">−2</text>
+          <!-- First Value +3 green -->
+          <circle cx="700" cy="25" r="7" fill="#43A047" stroke="white" stroke-width="2"/>
+          <text x="700" y="14" text-anchor="middle" font-size="13">😊</text>
+          <text x="700" y="95" text-anchor="middle" font-size="8" fill="#555">+3</text>
+          <!-- Habit +4 green -->
+          <circle cx="900" cy="16" r="7" fill="#43A047" stroke="white" stroke-width="2"/>
+          <text x="900" y="7" text-anchor="middle" font-size="13">🙂</text>
+          <text x="900" y="95" text-anchor="middle" font-size="8" fill="#555">+4</text>
+        </svg>
+      </div>
+
+      <!-- Pain Points -->
+      <div class="row-label">Pain Points</div>
+      <div class="cell cell-pain">
+        <div class="pain-card">
+          <div class="pain-text">Review sites show feature lists but not what it feels like to use the tool day-to-day — hard to evaluate fit before signing up</div>
+          <div class="pain-meta"><span class="severity-dot severity-medium"></span><span class="source-tag source-stated">stated</span></div>
+        </div>
+      </div>
+      <div class="cell cell-pain">
+        <div class="pain-card">
+          <div class="pain-text">Onboarding questions feel generic — the tool doesn't adapt the experience to what Alex actually answered</div>
+          <div class="pain-meta"><span class="severity-dot severity-medium"></span><span class="source-tag source-assumed">assumed</span></div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-text">First view is overwhelming — too many empty states, sidebar options, and tooltip hints firing at once</div>
+          <div class="pain-meta"><span class="severity-dot severity-high"></span><span class="source-tag source-research">research</span></div>
+        </div>
+      </div>
+      <div class="cell cell-pain">
+        <div class="pain-card">
+          <div class="pain-text">Product tour shows features in the wrong order — demonstrates advanced features before Alex has done anything basic</div>
+          <div class="pain-meta"><span class="severity-dot severity-high"></span><span class="source-tag source-research">research</span></div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-text">Templates don't match real marketing workflows — Alex has to delete half the pre-filled fields before they're usable</div>
+          <div class="pain-meta"><span class="severity-dot severity-high"></span><span class="source-tag source-stated">stated</span></div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-text">No guidance on how to migrate existing work — Alex has to figure out the spreadsheet import on their own</div>
+          <div class="pain-meta"><span class="severity-dot severity-medium"></span><span class="source-tag source-assumed">assumed</span></div>
+        </div>
+      </div>
+      <div class="cell cell-pain">
+        <div class="pain-card">
+          <div class="pain-text">Teammate adoption is a blocker Alex can't control — the tool only delivers value if the whole team switches</div>
+          <div class="pain-meta"><span class="severity-dot severity-high"></span><span class="source-tag source-stated">stated</span></div>
+        </div>
+        <div class="pain-card">
+          <div class="pain-text">Email notifications are too frequent during the first week — Alex mutes them and then misses important updates</div>
+          <div class="pain-meta"><span class="severity-dot severity-medium"></span><span class="source-tag source-research">research</span></div>
+        </div>
+      </div>
+      <div class="cell cell-pain">
+        <div class="pain-card">
+          <div class="pain-text">Upgrade prompt appears before the team has validated the tool — Alex can't get budget approval without proof of team adoption</div>
+          <div class="pain-meta"><span class="severity-dot severity-high"></span><span class="source-tag source-stated">stated</span></div>
+        </div>
+      </div>
+
+      <!-- Opportunities -->
+      <div class="row-label">Opportunities</div>
+      <div class="cell cell-opp">
+        <div class="opp-card">
+          <div class="opp-text">Embed a 60-second interactive preview on the landing page — let visitors experience one real workflow before signing up</div>
+          <div class="pain-meta"><span class="source-tag source-assumed">assumed</span></div>
+        </div>
+      </div>
+      <div class="cell cell-opp">
+        <div class="opp-card">
+          <div class="opp-text">Use onboarding question answers to pre-configure the workspace — show a dashboard that looks like their actual job on day one</div>
+          <div class="pain-meta"><span class="source-tag source-stated">stated</span></div>
+        </div>
+      </div>
+      <div class="cell cell-opp">
+        <div class="opp-card">
+          <div class="opp-text">Replace the feature tour with a single guided task — "create your first real project in 5 minutes" with a role-appropriate template pre-loaded</div>
+          <div class="pain-meta"><span class="source-tag source-research">research</span></div>
+        </div>
+        <div class="opp-card">
+          <div class="opp-text">Build a spreadsheet import wizard that maps column headers to the right fields automatically — remove the migration friction entirely</div>
+          <div class="pain-meta"><span class="source-tag source-assumed">assumed</span></div>
+        </div>
+      </div>
+      <div class="cell cell-opp">
+        <div class="opp-card">
+          <div class="opp-text">Send a "share this project" prompt at the moment of first task completion — ride the emotional high to drive teammate invites immediately</div>
+          <div class="pain-meta"><span class="source-tag source-stated">stated</span></div>
+        </div>
+      </div>
+      <div class="cell cell-opp">
+        <div class="opp-card">
+          <div class="opp-text">Delay upgrade prompt until the team reaches 3+ active members — tie the paywall trigger to adoption proof, not trial day count</div>
+          <div class="pain-meta"><span class="source-tag source-stated">stated</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZONE C -->
+  <div class="zone-c">
+    <div class="insight-section">
+      <h3>Biggest Pain Points</h3>
+      <div class="insight-pain-card">
+        <strong>The onboarding tour shows the wrong things at the wrong time</strong> — Advanced features fire before Alex has completed anything basic. The product is teaching before Alex is ready to learn. <em>High severity · Research</em>
+      </div>
+      <div class="insight-pain-card">
+        <strong>Teammate adoption is a blocker Alex can't control</strong> — The tool only delivers its core value promise if the whole team switches. Alex's conversion depends on other people's behavior. <em>High severity · Stated</em>
+      </div>
+      <div class="insight-pain-card">
+        <strong>The upgrade prompt appears too early</strong> — Alex needs adoption proof to get budget approval. The paywall fires before that proof exists, creating a catch-22. <em>High severity · Stated</em>
+      </div>
+    </div>
+    <div class="insight-section">
+      <h3>Top Opportunities</h3>
+      <div class="insight-opp-card">
+        <strong>Replace the feature tour with one guided real task</strong> — A role-appropriate template pre-loaded and a "complete this in 5 minutes" prompt gets Alex to first value in the same session they signed up. This directly fixes the onboarding drop-off.
+      </div>
+      <div class="insight-opp-card">
+        <strong>Tie the upgrade trigger to team adoption, not trial day count</strong> — Prompt the upgrade when 3+ teammates are active. This aligns the paywall with the moment Alex has proof of value — and the best chance of getting budget approved.
+      </div>
+    </div>
+    <div class="insight-section">
+      <h3>Recommended Focus</h3>
+      <div class="insight-focus">
+        The critical drop-off is at onboarding. Alex arrives curious (+3 at sign-up) and leaves disoriented (−2 after the tour). The gap between arrival sentiment and first-session abandonment is where most trials are lost.
+        <br><br>
+        Fixing the onboarding stage — replacing the feature tour with a single guided workflow, pre-loading a role-matched template, and triggering the teammate invite at the moment of first task completion — addresses the core problem without requiring any architectural changes.
+        <br><br>
+        <em>"I signed up, clicked around for 20 minutes, and then just went back to my spreadsheet."</em> That sentence is the product's onboarding problem, stated plainly.
+      </div>
+    </div>
+  </div>
+
+  <div class="map-footer">
+    <span>Alex — SaaS Onboarding | Current State | v1.0 · Sample map</span>
+    <span>Confidence: Medium · Mix of research and inference · Generated with Journey Mapping Plugin</span>
+  </div>
+
+</div>
+</body>
+</html>
