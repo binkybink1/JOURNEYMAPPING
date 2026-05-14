@@ -8,7 +8,7 @@ Intake to rendered HTML artifact — in one session.
 
 ## Install
 
-1. Download `journey-mapping.plugin` from the [latest release](https://github.com/binkybink1/journey-mapping/releases/latest)
+1. Download `journey-mapping.plugin` from the [latest release](https://github.com/binkybink1/JOURNEYMAPPING/releases/latest)
 2. Open Claude Code → Settings → Plugins → Install from file
 3. Select `journey-mapping.plugin`
 
